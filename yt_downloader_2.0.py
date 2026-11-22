@@ -10,7 +10,7 @@ import shutil
 import sys
 import yt_dlp
 
-DEFAULT_OUTPUT_DIR = "downloads"
+DEFAULT_OUTPUT_DIR = os.path.expanduser("~/Downloads")
 
 
 def _js_runtimes() -> dict:
@@ -208,7 +208,7 @@ def main():
         sys.exit(1)
 
     choice     = pick_format(sorted_res)
-    output_dir = input(f"Save folder [Enter = '{DEFAULT_OUTPUT_DIR}']: ").strip() or DEFAULT_OUTPUT_DIR
+    output_dir = input("Save folder [Enter = '~/Downloads']: ").strip() or DEFAULT_OUTPUT_DIR
 
     try:
         download(url, choice, sorted_res, output_dir)

@@ -10,7 +10,7 @@ import shutil
 import sys
 import yt_dlp
 
-DEFAULT_OUTPUT_DIR = "downloads"
+DEFAULT_OUTPUT_DIR = os.path.expanduser("~/Downloads")
 
 
 def _js_runtimes() -> dict:
@@ -168,7 +168,7 @@ def main():
         sys.exit(1)
 
     quality    = pick_quality()
-    output_dir = input(f"Save to folder [press Enter for '{DEFAULT_OUTPUT_DIR}']: ").strip() or DEFAULT_OUTPUT_DIR
+    output_dir = input("Save to folder [press Enter for '~/Downloads']: ").strip() or DEFAULT_OUTPUT_DIR
 
     try:
         download_video(url, quality=quality, output_dir=output_dir)
