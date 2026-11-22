@@ -1,0 +1,44 @@
+# Byte-compiled / optimized files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Download output directory
+downloads/*
+!downloads/.gitkeep
+
+# Media files (prevent large video/audio files from being tracked)
+*.mp4
+*.mkv
+*.webm
+*.avi
+*.mov
+*.flv
+*.mp3
+*.m4a
+*.wav
+*.opus
+
+# Incomplete / temporary download files
+*.part
+*.ytdl
+*.temp
+
+# macOS system files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# IDE / Editor folders
+.vscode/
+.idea/
+*.swp
+*.swo
