@@ -10,7 +10,7 @@ import shutil
 import sys
 import yt_dlp
 
-DEFAULT_OUTPUT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "downloads")
+DEFAULT_OUTPUT_DIR = os.path.expanduser("~/Downloads")
 
 
 def _ffmpeg_path() -> str | None:
@@ -183,7 +183,7 @@ def main():
         sys.exit(1)
 
     quality    = pick_quality()
-    output_dir = input("Save to folder [press Enter for 'downloads']: ").strip() or DEFAULT_OUTPUT_DIR
+    output_dir = input("Save to folder [press Enter for '~/Downloads']: ").strip() or DEFAULT_OUTPUT_DIR
 
     try:
         download_video(url, quality=quality, output_dir=output_dir)

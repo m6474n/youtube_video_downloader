@@ -10,7 +10,7 @@ A Python CLI tool powered by [`yt-dlp`](https://github.com/yt-dlp/yt-dlp) to dow
 - **Resolution Picker (v2.0)**: Inspect exact resolutions, FPS, codecs, and estimated file sizes in a formatted table before downloading.
 - **Bypasses HTTP 403 Forbidden**: Configured with automated JavaScript challenge solving (`ejs:github` via Node.js/Deno/Bun) to overcome YouTube's player cipher restrictions.
 - **Clean Merging**: Merges highest quality separate video + audio DASH streams into MP4 automatically.
-- **Default Output Folder**: Automatically saves downloads to `./downloads/` (can be overridden interactively or with shortcuts like `~/Downloads`).
+- **Default Output Folder**: Automatically saves downloads to `~/Downloads` (user's system Downloads folder; can be overridden interactively).
 - **Live Progress**: Displays download percentage, speed, and ETA.
 
 ---
