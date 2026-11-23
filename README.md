@@ -52,6 +52,49 @@ pip install -r requirements.txt
 
 ## 💻 Usage
 
+### Quick Shortcuts (Any terminal, anywhere)
+
+- **Download Full Video**:
+  ```bash
+  download-video
+  # or with direct link:
+  download-video "https://www.youtube.com/watch?v=VIDEO_ID"
+  ```
+
+- **Download Stream / Video Clips Batch** (without downloading whole video):
+  ```bash
+  download-clips
+  # or specify custom config file:
+  download-clips ./path/to/my_clips.js
+  ```
+
+---
+
+### Option 0: Multi-Clip Extractor (`yt_clips_downloader.py`)
+
+Extract multiple exact time slices from long streams or 24-hour recordings without downloading the entire video.
+
+1. Edit [clips_config.js](file:///d:/python_projects/youtube_video_downloader/clips_config.js):
+   ```javascript
+   module.exports = {
+     url: "https://www.youtube.com/watch?v=VIDEO_ID",
+     quality: "best", // "best", "1080p", "720p", "480p", "audio"
+     output_dir: "~/Downloads",
+     clips: [
+       { name: "intro", start: "00:01:00", end: "00:02:30" },
+       { name: "highlight", start: "01:15:20", end: "01:18:00" },
+       { name: "outro", start: "23:45:00", end: "23:47:30" },
+     ],
+   };
+   ```
+
+2. Run:
+   ```bash
+   download-clips
+   # or
+   python yt_clips_downloader.py
+   ```
+
 ### Option 1: Standard Downloader (`yt_downloader.py`)
 
 Interactive prompt:

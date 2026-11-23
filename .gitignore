@@ -24,6 +24,8 @@ downloads/*
 *.m4a
 *.wav
 *.opus
+ffmpeg.exe
+ffprobe.exe
 
 # Incomplete / temporary download files
 *.part
