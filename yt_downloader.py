@@ -10,7 +10,19 @@ import shutil
 import sys
 import yt_dlp
 
-DEFAULT_OUTPUT_DIR = os.path.expanduser("~/Downloads")
+DEFAULT_OUTPUT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "downloads")
+
+
+def _ffmpeg_path() -> str | None:
+    """Find ffmpeg in PATH or fallback to imageio_ffmpeg."""
+    path = shutil.which("ffmpeg")
+    if path:
+        return path
+    try:
+        import imageio_ffmpeg
+        return imageio_ffmpeg.get_ffmpeg_exe()
+    except Exception:
+        return None
 
 
 def _js_runtimes() -> dict:
@@ -31,7 +43,7 @@ def _js_runtimes() -> dict:
 def _common_ydl_opts() -> dict:
     """
     Base configuration for yt-dlp to avoid HTTP 403 Forbidden.
-    Enables JS runtimes and the remote EJS challenge solver.
+    Enables JS runtimes, remote EJS challenge solver, and ffmpeg.
     """
     opts = {
         "remote_components": ["ejs:github"],
@@ -43,6 +55,9 @@ def _common_ydl_opts() -> dict:
     runtimes = _js_runtimes()
     if runtimes:
         opts["js_runtimes"] = runtimes
+    ff = _ffmpeg_path()
+    if ff:
+        opts["ffmpeg_location"] = ff
     return opts
 
 
@@ -168,7 +183,7 @@ def main():
         sys.exit(1)
 
     quality    = pick_quality()
-    output_dir = input("Save to folder [press Enter for '~/Downloads']: ").strip() or DEFAULT_OUTPUT_DIR
+    output_dir = input("Save to folder [press Enter for 'downloads']: ").strip() or DEFAULT_OUTPUT_DIR
 
     try:
         download_video(url, quality=quality, output_dir=output_dir)

@@ -10,7 +10,19 @@ import shutil
 import sys
 import yt_dlp
 
-DEFAULT_OUTPUT_DIR = os.path.expanduser("~/Downloads")
+DEFAULT_OUTPUT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "downloads")
+
+
+def _ffmpeg_path() -> str | None:
+    """Find ffmpeg in PATH or fallback to imageio_ffmpeg."""
+    path = shutil.which("ffmpeg")
+    if path:
+        return path
+    try:
+        import imageio_ffmpeg
+        return imageio_ffmpeg.get_ffmpeg_exe()
+    except Exception:
+        return None
 
 
 def _js_runtimes() -> dict:
@@ -31,7 +43,7 @@ def _js_runtimes() -> dict:
 def _common_ydl_opts() -> dict:
     """
     Base configuration for yt-dlp to avoid HTTP 403 Forbidden.
-    Enables JS runtimes and the remote EJS challenge solver.
+    Enables JS runtimes, remote EJS challenge solver, and ffmpeg.
     """
     opts = {
         "remote_components": ["ejs:github"],
@@ -43,6 +55,9 @@ def _common_ydl_opts() -> dict:
     runtimes = _js_runtimes()
     if runtimes:
         opts["js_runtimes"] = runtimes
+    ff = _ffmpeg_path()
+    if ff:
+        opts["ffmpeg_location"] = ff
     return opts
 
 
@@ -163,8 +178,8 @@ def download(url, choice, sorted_res, output_dir=DEFAULT_OUTPUT_DIR):
     else:
         selected = sorted_res[choice - 1]
         height   = selected["height"]
-        # Best video at this exact height + best audio, merged to mp4
-        fmt = f"bestvideo[height={height}]+bestaudio/best[height<={height}]"
+        # Best video at this exact height + best audio, fallback to single stream
+        fmt = f"bestvideo[height={height}]+bestaudio/best[height={height}]/best[height<={height}]"
         ydl_opts = {
             **common_opts,
             "format": fmt,
@@ -208,7 +223,7 @@ def main():
         sys.exit(1)
 
     choice     = pick_format(sorted_res)
-    output_dir = input("Save folder [Enter = '~/Downloads']: ").strip() or DEFAULT_OUTPUT_DIR
+    output_dir = input("Save folder [Enter = 'downloads']: ").strip() or DEFAULT_OUTPUT_DIR
 
     try:
         download(url, choice, sorted_res, output_dir)

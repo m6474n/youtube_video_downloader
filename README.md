@@ -20,11 +20,15 @@ A Python CLI tool powered by [`yt-dlp`](https://github.com/yt-dlp/yt-dlp) to dow
 1. **Python 3.8+**
 2. **Node.js** (or Deno / Bun) — required by `yt-dlp` to execute YouTube's player challenges:
    ```bash
+   # Windows (winget)
+   winget install OpenJS.NodeJS
    # macOS (Homebrew)
    brew install node
    ```
-3. **FFmpeg** — required to merge separate video and audio streams into MP4 and convert to MP3:
+3. **FFmpeg** — required to merge separate video and audio streams into MP4 and convert to MP3. Automatically provided via Python package `imageio-ffmpeg` in `requirements.txt`, or installed system-wide:
    ```bash
+   # Windows (winget)
+   winget install Gyan.FFmpeg
    # macOS (Homebrew)
    brew install ffmpeg
    ```
