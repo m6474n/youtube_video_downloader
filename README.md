@@ -68,6 +68,16 @@ pip install -r requirements.txt
   download-clips ./path/to/my_clips.js
   ```
 
+- **Open Clips Config in Antigravity IDE**:
+  ```bash
+  open-clipping-config
+  ```
+
+- **Open Project in Antigravity**:
+  ```bash
+  clipper
+  ```
+
 ---
 
 ### Option 0: Multi-Clip Extractor (`yt_clips_downloader.py`)
